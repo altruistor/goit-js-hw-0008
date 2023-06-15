@@ -6,29 +6,9 @@ import "simplelightbox/dist/simple-lightbox.min.css";
 import { galleryItems } from './gallery-items';
 // Change code below this line
 
-import { galleryItems } from './gallery-items.js';
-// import * as basicLightbox from 'basiclightbox'
-// Change code below this line
-
-
-
-
-
-
-
-
 const gallery = document.querySelector('.gallery');
 
-const imagesMarkup = createImageMarkup(galleryItems);
-
-gallery.insertAdjacentHTML('beforeend', imagesMarkup);
-
-
-
-
-function createImageMarkup(galleryItems) {
-    return galleryItems
-    .map(({preview, original, description}) => {
+const createImageMarkup = galleryItems.map(({preview, original, description}) => {
         return `
         <li class="gallery__item">
         <a class="gallery__link" href="${original}">
@@ -44,23 +24,18 @@ function createImageMarkup(galleryItems) {
     .join('');
 
 
-}
 
-function openImage(event) {
-    event.preventDefault();
-    if (event.target.nodeName !== "IMG") {
-        return;
-    }
+
+gallery.insertAdjacentHTML('beforeend', createImageMarkup);
+
+
     
     
   const instance = new SimpleLightbox('.gallery a', { 
-    
-    
-
+    captionPosition: "bottom",
+    captionData: "alt",
+    captionDelay: 250,
      });
 
-    instance.show();
-}
 
 
-gallery.addEventListener('click', openImage);
