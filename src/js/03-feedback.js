@@ -94,7 +94,7 @@ const keyStorage = "feedback-form-state";
 const feedbackForm = document.querySelector('.feedback-form');
 const emailInput = document.querySelector("input");
 const messageInput = document.querySelector("textarea");
-
+returnState();
 
 const updateLocalStorage = throttle(() => {
   const markup = {
@@ -105,18 +105,22 @@ const updateLocalStorage = throttle(() => {
 }, 500);
 
 
+
 emailInput.addEventListener('input', updateLocalStorage);
 messageInput.addEventListener('input', updateLocalStorage);
 
 feedbackForm.addEventListener('submit', evt => {
     evt.preventDefault();
-
-    console.log(emailInput.value);
+    
+    
 
     const markup = {
         email: emailInput.value,
         message: messageInput.value,
     }
+  
+  if (!markup) return;
+  
     localStorage.setItem(keyStorage, JSON.stringify(markup));
 
     feedbackForm.elements.email.value = '';
@@ -127,3 +131,17 @@ feedbackForm.addEventListener('submit', evt => {
     console.log(markup);
     
 });
+
+
+
+// window.addEventListener('load', () => {
+
+
+  function returnState(){
+  const savedState = localStorage.getItem(keyStorage);
+  if (savedState) {
+    const markup = JSON.parse(savedState);
+    emailInput.value = savedState.email;
+    messageInput.value = savedState.message;
+  }
+};
