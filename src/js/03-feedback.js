@@ -86,8 +86,7 @@
   
 
 
-
-
+import { mark } from "@vimeo/player";
 import throttle from "lodash/throttle";
 
 const keyStorage = "feedback-form-state";
@@ -119,7 +118,7 @@ feedbackForm.addEventListener('submit', evt => {
         message: messageInput.value,
     }
   
-  if (!markup) return;
+  if (emailInput.value === "" || messageInput.value === "") return ;
   
     localStorage.setItem(keyStorage, JSON.stringify(markup));
 
@@ -141,7 +140,7 @@ feedbackForm.addEventListener('submit', evt => {
   const savedState = localStorage.getItem(keyStorage);
   if (savedState) {
     const markup = JSON.parse(savedState);
-    emailInput.value = savedState.email;
-    messageInput.value = savedState.message;
+    emailInput.value = markup.email;
+    messageInput.value = markup.message;
   }
 };
